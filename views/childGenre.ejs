@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Children's Books</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-image: url('/images/background.jpg'); 
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding-top: 80px; 
+    }
+
+    .navbar {
+      margin-bottom: 20px;
+    }
+
+
+    .container {
+      flex: 1;
+    }
+
+    .footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .footer .fa-book {
+      margin: 0 5px;
+      font-size: 1.2rem;
+    }
+
+    .table {
+      background-color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<%- include('navbar') %>
+
+<!-- Main Content -->
+<div class="container mt-5">
+  <div class="text-center mb-4">
+    <h2>Children's Books</h2>
+    <p>Books in the Children's Books:</p>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Book Name</th>
+          <th>Book Image</th>
+          <th>Author</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% books.forEach(book => { %>
+          <tr>
+            <td><%= book.name %></td>
+            <td><img src="images/<%= book.image %>" width="50" height="50"></td>
+            <td><%= book.author %></td>
+            <td><a href="/books/<%= book.bookId %>" class="btn btn-primary">Details</a></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Footer -->
+<%- include('footer') %>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

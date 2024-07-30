@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BookLovers</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-image: url('/images/background.jpg');
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
+      padding-top: 60px; 
+    }
+
+    .navbar {
+      margin-bottom: 20px;
+    }
+
+  
+    .container {
+      flex: 1;
+    }
+
+    .footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .footer .fa-book {
+      margin: 0 5px;
+      font-size: 1.2rem;
+    }
+
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      margin: 8px;
+      padding: 20px;
+      text-align: center;
+      background-color: #f2f2f2;
+    }
+
+    .card-button {
+      margin-top: 10px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .card {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<%- include('navbar') %>
+
+<!-- Main Content -->
+<div class="container mt-5">
+  <div class="text-center mb-4">
+    <h2>Favourite Genres</h2>
+    <p>Our most popular genres:</p>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card">
+        <h3>Romance</h3>
+        <p>The romance genre captivates readers with tales of love, passion, and emotional journeys between characters. Often focusing on relationships, it explores themes of longing, heartbreak, and the triumph of love against all odds. From historical settings to contemporary dramas, romance novels promise escapism and heartfelt narratives that celebrate the complexities of human connections.</p>
+        <a href="/romanceGenre" class="btn btn-primary card-button">Click Here</a>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card">
+        <h3>Fiction</h3>
+        <p>Fiction transports readers to imagined worlds and experiences, weaving narratives that spark imagination and empathy. It encompasses a vast array of genres and styles, from literary classics to modern thrillers, each offering unique perspectives on life, society, and the human condition. Through storytelling, fiction invites readers to explore new realities, contemplate universal truths, and connect deeply with characters and their journeys.</p>
+        <a href="/fictionGenre" class="btn btn-primary card-button">Click Here</a>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card">
+        <h3>Horror</h3>
+        <p>The horror genre delves into the primal fears and dark corners of the human psyche, invoking suspense, dread, and adrenaline. It immerses readers in chilling tales of supernatural entities, psychological terror, and suspenseful plot twists. Through its spine-tingling narratives, horror provokes both fear and fascination, offering an exhilarating exploration of the unknown and the macabre.</p>
+        <a href="/horrorGenre" class="btn btn-primary card-button">Click here</a>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card">
+        <h3>Children's Books</h3>
+        <p>Children's books are literary works created for young readers, ranging from toddlers to early teens. This genre encompasses a variety of formats, including picture books, early readers, chapter books, and middle-grade novels. Themes often focus on adventure, friendship, family, and moral lessons, conveyed through engaging stories and vibrant illustrations. The language and content are tailored to be age-appropriate, encouraging imagination, learning, and a love for reading.</p>
+        <a href="/childGenre" class="btn btn-primary card-button">Click here</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<%- include('footer') %>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

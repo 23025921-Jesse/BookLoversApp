@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New Book</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-image: url('/images/background.jpg'); 
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding-top: 80px; 
+    }
+
+    .navbar {
+      margin-bottom: 20px;
+    }
+
+
+
+    .container {
+      flex: 1;
+    }
+
+    .footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .footer .fa-book {
+      margin: 0 5px;
+      font-size: 1.2rem;
+    }
+
+    .form-container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-label {
+      font-weight: bold;
+    }
+
+    .form-control {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<%- include('navbar') %>
+
+<!-- Main Content -->
+<div class="container">
+  <br>
+  <div class="text-center"><h2>Add New Book</h2></div>
+  <br>
+  <div class="form-container">
+    <form action="/addBook" method="POST" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="name" class="form-label">Book Name:</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+      </div>
+      <div class="mb-3">
+        <label for="author" class="form-label">Author:</label>
+        <input type="text" class="form-control" id="author" name="author" required>
+      </div>
+      <div class="mb-3">
+        <label for="genre" class="form-label">Genre:</label>
+        <input type="text" class="form-control" id="genre" name="genre" required>
+      </div>
+      <div class="mb-3">
+        <label for="price" class="form-label">Price:</label>
+        <input type="number" class="form-control" id="price" name="price" min="0" step="0.01" required>
+      </div>
+      <div class="mb-3">
+        <label for="quantity" class="form-label">Quantity:</label>
+        <input type="number" class="form-control" id="quantity" name="quantity" min="1" required>
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description:</label>
+        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="reviewlink" class="form-label">Review Link:</label>
+        <input type="text" class="form-control" id="reviewlink" name="reviewlink">
+      </div>
+      <div class="mb-3">
+        <label for="image" class="form-label">Image:</label>
+        <input type="file" class="form-control" id="image" name="image" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Add Book</button>
+    </form>
+  </div>
+</div>
+
+<!-- Footer -->
+<%- include('footer') %>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
