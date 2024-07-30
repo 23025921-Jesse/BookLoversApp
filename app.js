@@ -114,7 +114,6 @@ app.get('/thankYou', (req, res) => {
   res.render('thankYou');
 });
 
-
 app.get('/genres', (req, res) => {
   res.render('genres');
 });
@@ -198,22 +197,18 @@ app.post('/add-to-cart/:bookId', (req, res) => {
     const values = [book.name, quantity, book.price];
     connection.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error adding book to cart:', err.message);
-        return res.status(500).send('Error adding book to cart');
+        console.error('Error adding item to cart:', err.message);
+        return res.status(500).send('Error adding item to cart');
       }
-      console.log('Book added to cart successfully.');
-      res.redirect('/cart');
+      console.log('Item added to cart successfully.');
+      res.redirect('/cart'); 
     });
   });
 });
 
-// Update cart item route
-app.post('/update-cart/:cartId', (req, res) => {
-  const { cartId } = req.params;  
-  const { quantity } = req.body;
-
-  const sql = `UPDATE cart SET quantity = ? WHERE cartId = ?`;
-
+app.post('/cart/update', (req, res) => {
+  const { cartId, quantity } = req.body;
+  const sql = 'UPDATE cart SET quantity = ? WHERE cartId = ?';
   connection.query(sql, [quantity, cartId], (err, result) => {
     if (err) {
       console.error('Error updating cart item:', err.message);
@@ -224,11 +219,9 @@ app.post('/update-cart/:cartId', (req, res) => {
   });
 });
 
-// Route to delete from cart
-app.post('/delete-from-cart/:cartId', (req, res) => {
+app.post('/cart/delete/:cartId', (req, res) => {
   const { cartId } = req.params;
-
-  const sql = `DELETE FROM cart WHERE cartId = ?`;
+  const sql = 'DELETE FROM cart WHERE cartId = ?';
   connection.query(sql, [cartId], (err, result) => {
     if (err) {
       console.error('Error deleting cart item:', err.message);
@@ -239,102 +232,35 @@ app.post('/delete-from-cart/:cartId', (req, res) => {
   });
 });
 
-// Route to render addBook page
-app.get('/addBook', (req, res) => {
-  res.render('addBook');
-});
-
-// Route to handle book addition
-app.post('/addBook', upload.single('image'), (req, res) => {
-  const { name, author, description, price, quantity, genre, reviewlink } = req.body;
-  let image = req.file ? req.file.filename : null;
-  const sql = 'INSERT INTO books (name, author, description, price, quantity, genre, image, reviewlink) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-  
-  connection.query(sql, [name, author, description, price, quantity, genre, image, reviewlink], (error, results) => {
-      if (error) {
-          console.error("Error adding book:", error);
-          return res.status(500).send('Error adding book');
-      }
-      res.redirect('/allBooks');
-  });
-});
-
-// Route to delete book from database and redirect to allBooks page
-app.post('/delete-book/:bookId', (req, res) => {
-  const { bookId } = req.params;
-
-  const sql = `DELETE FROM books WHERE bookId = ?`;
-  connection.query(sql, [bookId], (err, result) => {
-    if (err) {
-      console.error('Error deleting book:', err.message);
-      return res.status(500).send('Error deleting book');
-    }
-    console.log('Book deleted successfully.');
-    res.redirect('/allBooks');
-  });
-});
-
-app.get('/feedback', (req, res) => {
-  const sql = 'SELECT firstname, country, description FROM contact';
-  connection.query(sql, (err, results) => {
-    if (err) {
-      console.error('Database query error:', err.message);
-      return res.status(500).send('Error retrieving feedback');
-    }
-    res.render('feedback', { feedback: results });
-  });
-});
-
-// Route for checkout process
 app.get('/checkout', (req, res) => {
   res.render('checkout');
 });
 
-// Handle checkout form submission
 app.post('/checkout', (req, res) => {
   const { name, email, paymentType, address } = req.body;
-
-  // Get current date
   const orderDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  const sql = 'INSERT INTO orders (name, email, paymentType, address, orderDate) VALUES (?, ?, ?, ?, ?)';
+  const values = [name, email, paymentType, address, orderDate];
 
-  // Fetch items from cart
-  const sqlFetchCart = 'SELECT * FROM cart';
-  connection.query(sqlFetchCart, (err, cartItems) => {
+  connection.query(sql, values, (err, result) => {
     if (err) {
-      console.error('Error fetching cart items:', err.message);
-      return res.status(500).send('Error fetching cart items');
+      console.error('Error inserting order:', err.message);
+      return res.status(500).send('Error processing order');
     }
-
-    // Insert order into orders table
-    const sqlInsertOrder = 'INSERT INTO orders (name, email, paymentType, address, orderDate) VALUES (?, ?, ?, ?, ?)';
-    const values = [name, email, paymentType, address, orderDate];
-
-    connection.query(sqlInsertOrder, values, (err, result) => {
-      if (err) {
-        console.error('Error inserting order:', err.message);
-        return res.status(500).send('Error inserting order');
-      }
-
-      // Clear cart after successful order
-      const sqlClearCart = 'DELETE FROM cart';
-      connection.query(sqlClearCart, (err, result) => {
-        if (err) {
-          console.error('Error clearing cart:', err.message);
-          return res.status(500).send('Error clearing cart');
-        }
-
-        console.log('Order placed successfully.');
-        res.redirect('/'); 
-      });
-    });
+    console.log('Order placed successfully.');
+    res.redirect('/orderConfirmation');
   });
+});
+
+app.get('/orderConfirmation', (req, res) => {
+  res.render('orderConfirmation');
 });
 
 app.get('/orderReview', (req, res) => {
   const sql = 'SELECT * FROM orders';
   connection.query(sql, (err, results) => {
     if (err) {
-      console.error('Database query error:', err.message);
+      console.error('Error retrieving orders:', err.message);
       return res.status(500).send('Error retrieving orders');
     }
     res.render('orderReview', { orders: results });
@@ -356,7 +282,8 @@ app.post('/delete-order/:orderId', (req, res) => {
   });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+// Start the server 
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
