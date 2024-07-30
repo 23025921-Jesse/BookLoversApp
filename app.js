@@ -341,6 +341,20 @@ app.get('/orderReview', (req, res) => {
   });
 });
 
+// Route to delete an order
+app.post('/delete-order/:orderId', (req, res) => {
+  const { orderId } = req.params;
+
+  const sql = `DELETE FROM orders WHERE orderId = ?`;
+  connection.query(sql, [orderId], (err, result) => {
+    if (err) {
+      console.error('Error deleting order:', err.message);
+      return res.status(500).send('Error deleting order');
+    }
+    console.log('Order deleted successfully.');
+    res.redirect('/orderReview'); 
+  });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

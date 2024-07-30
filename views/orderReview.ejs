@@ -54,6 +54,7 @@
             <th>Payment Type</th>
             <th>Address</th>
             <th>Order Date</th>
+            <th>Delete Order</th>
           </tr>
         </thead>
         <tbody>
@@ -66,6 +67,13 @@
                 <td><%= order.paymentType %></td>
                 <td><%= order.address %></td>
                 <td><%= order.orderDate %></td>
+                <td>
+                  <form action="/deleteOrder/<%= order.orderId %>" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm">
+                      <i class="fas fa-trash"></i> Delete
+                    </button>
+                  </form>
+                </td>
               </tr>
             <% }) %>
           <% } else { %>
