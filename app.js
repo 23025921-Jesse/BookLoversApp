@@ -20,9 +20,9 @@ const upload = multer({ storage: storage });
 
 // Create MySQL connection 
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
+  host: 'bookloversapp.crzqg6ipkaum.us-east-1.rds.amazonaws.com',
+  user: 'jesse23025921',
+  password: 'Rajjes1518',
   database: 'bookstoreapp'
 });
 
